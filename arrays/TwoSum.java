@@ -24,18 +24,17 @@
 package arrays;
 
 import java.util.HashMap;
+import java.util.Arrays;
+
+
 
 public class TwoSum {
 
-	public static void main(String args[]) {
+	// APPROACH 1: Brute Force
+	// Check every possible pair.
+	// Time: O(n^2), Space: O(1)
 
-		int[] nums = {15, 7, 2, 11};
-		int target = 9;
-
-
-		// APPROACH 1: Brute Force
-		// Check every possible pair.
-		// Time: O(n^2), Space: O(1)
+	public int[] twoSumBrute(int[] nums, int target) {
 
 		for (int i = 0; i < nums.length - 1; i++) {
 
@@ -44,23 +43,24 @@ public class TwoSum {
 				int x = target - nums[i];
 
 				if (nums[j] == x) {
-
-					System.out.println("Brute Force O(n^2)");
-					System.out.printf("(%d, %d)%n", i, j);
+					return new int[] {i, j};
 				}
 			}
 		}
+        return new int[] {-1, -1};
+
+	}
 
 
-		/*
-		 * APPROACH 2: HashMap - Two Pass
-		 *
-		 * First pass: put all numbers and their indices into the map.
-		 * Second pass: search for the required number.
-		 *
-		 * Time: O(n), Space: O(n)
-		 */
-
+	/*
+	 * APPROACH 2: HashMap - Two Pass
+	 *
+	 * First pass: put all numbers and their indices into the map.
+	 * Second pass: search for the required number.
+	 *
+	 * Time: O(n), Space: O(n)
+	 */
+	public int[] twoSumTwoPass(int[] nums, int target) {
 		HashMap<Integer, Integer> map = new HashMap<>();
 
 		// Pass 1: Store all numbers and their indices.
@@ -74,44 +74,63 @@ public class TwoSum {
 			int x = target - nums[i];
 
 			if (map.containsKey(x) && map.get(x) > i) {
-
-				System.out.println("\nHashMap - Two Pass O(n)");
-				System.out.printf("(%d, %d)%n", i, map.get(x));
+				return new int[] {i, map.get(x)};
 			}
 		}
+		throw new IllegalArgumentException("No solution found");
 
 
-		/*
-		 * APPROACH 3: HashMap - One Pass
-		 *
-		 * Unlike the previous approach, we don't build the
-		 * complete map first.
-		 *
-		 * For each number:
-		 * 1. Check if its required pair is already in the map.
-		 * 2. If not, store the current number and its index.
-		 *
-		 * So lookup + storing happen in the SAME loop.
-		 *
-		 * Time: O(n), Space: O(n)
-		 */
+	}
 
-		map.clear(); // Start with an empty map.
+	/*
+	 * APPROACH 3: HashMap - One Pass
+	 *
+	 * Unlike the previous approach, we don't build the
+	 * complete map first.
+	 *
+	 * For each number:
+	 * 1. Check if its required pair is already in the map.
+	 * 2. If not, store the current number and its index.
+	 *
+	 * So lookup + storing happen in the SAME loop.
+	 *
+	 * Time: O(n), Space: O(n)
+	 */
+	public int[] twoSumOptimal(int[] nums, int target) {
+		HashMap<Integer, Integer> map = new HashMap<>();
 
 		for (int i = 0; i < nums.length; i++) {
 
 			int x = target - nums[i];
 
 			if (map.containsKey(x)) {
-
-				System.out.println("\nHashMap - One Pass O(n)");
-				System.out.printf("(%d, %d)%n", map.get(x), i);
-
-				break;
+				return new int[] {map.get(x),i};
 			}
 			else {
 				map.put(nums[i], i);
-			}
+			}		
+
 		}
+		throw new IllegalArgumentException("No solution found");
+
 	}
-}
+		public static void main(String args[]) {
+			
+			int[] nums = {15, 7, 2, 11};
+			int target = 9;
+			TwoSum obj = new TwoSum();
+			int[] result1 = obj.twoSumBrute(nums, target);
+			int[] result2 = obj.twoSumTwoPass(nums, target);
+			int[] result3 = obj.twoSumOptimal(nums, target);
+			
+			System.out.println("Brute Force O(n^2)");
+			System.out.println(Arrays.toString(result1));
+			System.out.println("\nHashMap - Two Pass O(n)");
+			System.out.println(Arrays.toString(result2));
+			System.out.println("\nHashMap - One Pass O(n)");
+			System.out.println(Arrays.toString(result3));
+			
+		}
+
+		
+	}
