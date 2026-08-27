@@ -100,21 +100,28 @@ public class GroupAnagram {
 
 
     // ============================================================
-    // APPROACH 3: SORTING-BASED APPROACH - BETTER APPROACH
+    // APPROACH 2: SORTING-BASED APPROACH - BETTER APPROACH
     // Time: O(n * k log k)
     // Space: O(n * k)
     // ============================================================
-    public List<List<String>> groupAnagramSorting(String str){
-    	List<List<String>> result = new ArrayList<>();
+    public List<List<String>> groupAnagramSorting(String[] str){
     	HashMap<String, List<String>> map = new HashMap<>();
-    	for (int i = 0 ; i < str.length(); i++) {
+    	
+    	for (String s : str) {
+    		char[] chars = s.toCharArray();
+    		Arrays.sort(chars);
     		
+    		String key = new String(chars);
     		
+    		map.putIfAbsent(key, new ArrayList<>());
+    		map.get(key).add(s);
     	}
+    	return new ArrayList<>(map.values());
     }
 
+    
     // ============================================================
-    // APPROACH 4: HASHMAP KEY-BASED APPROACH
+    // APPROACH 3: HASHMAP KEY-BASED APPROACH
     // All three have the same key, so they go into the same group.
     //
     // Time: O(n * k)
@@ -130,7 +137,11 @@ public class GroupAnagram {
 
         GroupAnagram obj = new GroupAnagram();
 
-        System.out.println(obj.groupAnagramBruteForce(strs));
+        System.out.println("Brute Force Approach\nTime: O(n^2 * k)\nSpace: O(n)" + obj.groupAnagramSorting(strs));
+        
+        System.out.println("\nSorting Approach\nTime: O(n * k log k)\nSpace: O(n * k)" + obj.groupAnagramSorting(strs));
+                
+
 
     }
 }
