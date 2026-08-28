@@ -122,13 +122,29 @@ public class GroupAnagram {
     
     // ============================================================
     // APPROACH 3: HASHMAP KEY-BASED APPROACH
-    // All three have the same key, so they go into the same group.
+    // Strings with same key in same group
     //
     // Time: O(n * k)
     // Space: O(n * k)
     // ============================================================
+    
+    public List<List<String>> groupAnagramHashKey(String[] str){
+    	HashMap<String, List<String>> map = new HashMap<>();
+    	for (String s : str) {
+    		int[] count = new int[26];
+    		
+    		for (int j = 0; j < s.length(); j++) {
+    			count[s.charAt(j) - 'a']++;
+    		}
+    		String key = Arrays.toString(count);
+    		map.putIfAbsent(key, new ArrayList<>());
+    		map.get(key).add(s);
+    	}
+    	return new ArrayList<>(map.values());
 
-
+    }
+    
+    
     public static void main(String[] args) {
 
         String[] strs = {
@@ -137,10 +153,12 @@ public class GroupAnagram {
 
         GroupAnagram obj = new GroupAnagram();
 
-        System.out.println("Brute Force Approach\nTime: O(n^2 * k)\nSpace: O(n)" + obj.groupAnagramSorting(strs));
+        System.out.println("Brute Force Approach\nTime: O(n^2 * k)\nSpace: O(n)\n" + obj.groupAnagramSorting(strs));
         
-        System.out.println("\nSorting Approach\nTime: O(n * k log k)\nSpace: O(n * k)" + obj.groupAnagramSorting(strs));
+        System.out.println("\nSorting Approach\nTime: O(n * k log k)\nSpace: O(n * k)\n" + obj.groupAnagramSorting(strs));
                 
+        System.out.println("\nSorting Approach\nTime: O(n * k)\nSpace: O(n * k)\n" + obj.groupAnagramHashKey(strs));
+
 
 
     }
