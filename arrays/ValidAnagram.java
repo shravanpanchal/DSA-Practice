@@ -24,7 +24,7 @@ public class ValidAnagram {
         // Each position is initially 0.
         int[] charCount = new int[26];
 
-        for (int i = 0; i < s.length(); i++) {.
+        for (int i = 0; i < s.length(); i++) {
 
             charCount[s.charAt(i) - 'a']++;
             charCount[t.charAt(i) - 'a']--;
