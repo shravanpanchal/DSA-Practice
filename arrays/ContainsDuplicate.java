@@ -4,7 +4,6 @@
  */
 
 package arrays;
-import java.util.Arrays;
 import java.util.HashSet;
 
 
@@ -23,7 +22,7 @@ public class ContainsDuplicate {
 	 */
 
 	
-	public boolean ContainsDuplicate(int[] nums) {
+	public boolean containsDuplicate(int[] nums) {
 		HashSet<Integer> set = new HashSet<>();
 		for (int i = 0; i < nums.length; i++) {
 			if (set.contains(nums[i])) {
@@ -39,7 +38,7 @@ public class ContainsDuplicate {
 	public static void main(String args[]) {
 		int[] nums = {1, 4, 3, 5};
 		ContainsDuplicate obj = new ContainsDuplicate();
-		System.out.println(obj.ContainsDuplicate(nums));
+		System.out.println(obj.containsDuplicate(nums));
 
 	}
 }
