@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import java.util.PriorityQueue;
+
 
 public class Top_K_Elements {
 
@@ -101,7 +103,45 @@ public class Top_K_Elements {
      * O(m + k)
      */
     public int[] topK_UsingMinHeap(int[] arr, int k) {
-        return null;
+    	
+    	//Handle invalid or empty list
+    	if (arr == null || arr.length == 0|| k <= 0) {
+    		return new int[0];
+    	}
+    	
+    	//Count frequency of each element
+    	Map<Integer, Integer> map = new HashMap<>();
+    	for (int num : arr) {
+    		map.put(num, map.getOrDefault(num, 0) + 1);
+    	}
+    	
+    	// k cannot be greaten then the number of distinct elements in the array
+    	if (k > map.size()) {
+    		throw new IllegalArgumentException("k cannot be greater than number of distinct elements");
+    	}
+    	
+    	//create a heap and insert the map entries w.r.t frequencies
+    	PriorityQueue<Map.Entry<Integer,Integer>> minHeap = new PriorityQueue<>((a, b) -> Integer.compare(a.getValue() ,b.getValue()));
+    	for (Map.Entry<Integer, Integer> entries : map.entrySet())	{
+			minHeap.offer(entries);
+		// Keep only the top k elements poll the rest
+    		if (minHeap.size() > k) {
+    			minHeap.poll();
+    			
+    		}
+    	}
+    	// Add the result to list
+    	
+    	int i = 0;
+    	int[] result = new int[minHeap.size()];
+    	while (!minHeap.isEmpty()) {
+    		result[i++] = minHeap.poll().getKey();
+    		
+    	}
+    		
+    		
+    	
+        return result;
     }
 
 
@@ -119,8 +159,34 @@ public class Top_K_Elements {
      * Space:
      * O(m)
      */
+    
     public int[] topK_UsingMaxHeap(int[] arr, int k) {
-        return null;
+    	//Handle invalid or empty list
+    	if (arr == null || arr.length == 0 || k <= 0) {
+    		return new int[0];
+    	}
+    	
+    	//Count the frequency of each element
+    	Map<Integer, Integer> map = new HashMap<>();
+    	for (int num : arr) {
+    		map.put(num, map.getOrDefault(num, 0) + 1);
+    	}
+    	//k cannot be greater than total number of distinct elements
+    	if (map.size() < k) {
+    		throw new IllegalArgumentException("k cannot be greater than the total number of distinct elements in array");
+    	}
+    	//Put elements in MaxHeap
+    	PriorityQueue<Map.Entry<Integer, Integer>> maxHeap = new PriorityQueue<>((a, b) -> Integer.compare(b.getValue() , a.getValue()));
+    	maxHeap.addAll(map.entrySet());
+    	
+    	//Extract the maximum k times
+    	int[] result = new int[k];
+    	for (int i = 0; i < k; i++) {
+    		result[i] = maxHeap.poll().getKey();
+
+    	}
+    	
+        return result;
     }
 
 
@@ -144,7 +210,52 @@ public class Top_K_Elements {
      * O(n + m)
      */
     public int[] topK_UsingBucket(int[] arr, int k) {
-        return null;
+    	//Handle invalid input and empty array
+    	if (arr == null || arr.length == 0 || k <= 0) {
+    		return new int[0];
+ 
+    	}
+    	
+    	//Count frequencies of each element
+    	Map<Integer, Integer> frequency = new HashMap<>();
+    	for (int num : arr) {
+    		frequency.put(num, frequency.getOrDefault(num, 0) + 1);
+    		
+    	}
+    	
+    	//k cannot be greater then the total number of distinct elements in the array
+    	if (k > frequency.size()) {
+    		throw new IllegalArgumentException("K cannot be greater than the total number of distinct elements in the array");
+    	}
+    	
+    	//create buckets
+    	ArrayList<ArrayList<Integer>> bucket = new ArrayList<>();
+    	for (int i = 0; i < arr.length + 1; i++) {
+    		bucket.add(new ArrayList<>());
+    	}
+    	for (Map.Entry<Integer, Integer> entry : frequency.entrySet()) {
+    		
+    		int num = entry.getKey();
+    		int count = entry.getValue();
+    		
+    		bucket.get(count).add(num);
+    	
+    	}
+    	
+    	//Store top k in result
+    	int[] result = new int[k];
+    	int index = 0;
+    	for (int count = bucket.size() - 1; count >= 0 && index < k; count--) {
+    			
+    		for (int num : bucket.get(count)) {
+    			result[index++] = num;
+    			
+    			if (index == k) {
+    				break;
+    			}
+    		}
+    	}
+        return result;
     }
 
 
@@ -182,9 +293,23 @@ public class Top_K_Elements {
         };
 
         int k = 3;
+
         Top_K_Elements obj = new Top_K_Elements();
-        int[] result = obj.topK_UsingSorting(array, k);
-        System.out.print(Arrays.toString(result));
-    
-}
+
+        // Approach 1: Sorting
+        int[] result1 = obj.topK_UsingSorting(array, k);
+        System.out.println("Sorting : " + Arrays.toString(result1));
+
+        // Approach 2: Min Heap
+        int[] result2 = obj.topK_UsingMinHeap(array, k);
+        System.out.println("Min Heap : " + Arrays.toString(result2));
+
+        // Approach 3: Max Heap
+        int[] result3 = obj.topK_UsingMaxHeap(array, k);
+        System.out.println("Max Heap : " + Arrays.toString(result3));
+
+        // Approach 4: Bucket Sort
+        int[] result4 = obj.topK_UsingBucket(array, k);
+        System.out.println("Bucket : " + Arrays.toString(result4));
+    }
 }
