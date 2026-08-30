@@ -27,6 +27,13 @@
 
 package arrays;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
 public class Top_K_Elements {
 
     /*
@@ -48,7 +55,33 @@ public class Top_K_Elements {
      * m = number of distinct elements
      */
     public int[] topK_UsingSorting(int[] arr, int k) {
-        return null;
+    	//Handle invalid or empty input
+    	if (arr == null || arr.length == 0 || k <= 0) {
+    		return new int[0];
+    	}
+    	//Count frequency of each element
+        Map<Integer, Integer> map = new HashMap<>();
+        
+        for (int num : arr) {
+        		map.put(num, map.getOrDefault(num, 0) + 1);
+        	}
+        //K cannot be greater than number of Distinct Elements
+        if (k > map.size()) {
+        	throw new IllegalArgumentException("k cannot be greater than number of distinct elements");
+        }
+        
+        //Convert Map entries to list then sort
+        List<Map.Entry<Integer, Integer>> entries = new ArrayList<>(map.entrySet());
+        entries.sort((a, b) -> Integer.compare(b.getValue() , a.getValue()));
+        
+        //Store first k keys
+        int[] result = new int[k];
+        for (int i = 0; i < k; i++) {
+       		result[i] = entries.get(i).getKey();
+        }
+    	
+    	
+    	return result;
     }
 
 
@@ -149,6 +182,9 @@ public class Top_K_Elements {
         };
 
         int k = 3;
-
-    }
+        Top_K_Elements obj = new Top_K_Elements();
+        int[] result = obj.topK_UsingSorting(array, k);
+        System.out.print(Arrays.toString(result));
+    
+}
 }
