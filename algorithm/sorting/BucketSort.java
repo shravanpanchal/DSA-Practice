@@ -49,6 +49,7 @@ public class BucketSort {
 		//Find the range of the array
 		int range = max - min + 1;
 		
+		//Create Buckets
 		ArrayList<ArrayList<Integer>> buckets = new ArrayList<>();
 		
 		for (int i = 0; i < n; i++) {
