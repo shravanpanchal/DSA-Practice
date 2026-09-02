@@ -132,11 +132,9 @@ public class Top_K_Elements {
     	}
     	// Add the result to list
     	
-    	int i = 0;
-    	int[] result = new int[minHeap.size()];
-    	while (!minHeap.isEmpty()) {
-    		result[i++] = minHeap.poll().getKey();
-    		
+    	int[] result = new int[k];
+    	for (int i = 0; i < k; i++) {
+    	    result[i] = minHeap.poll().getKey();
     	}
     		
     		
@@ -275,13 +273,83 @@ public class Top_K_Elements {
      * O(n)
      *
      * Worst Case:
-     * O(n + m²)
+     * O(n + m²) → O(n²)
      *
      * Space:
      * O(m)
      */
     public int[] topK_UsingQuickSelect(int[] arr, int k) {
-        return null;
+
+    	//Handle invalid or empty array
+    	if (arr == null || arr.length == 0 || k <= 0) {
+    		return new int[0];
+ 
+    	}
+    	
+    	//Count the frequencies of each Element
+    	Map<Integer,Integer> frequency = new HashMap<>();
+    	for (int nums : arr) {
+    		frequency.put(nums, frequency.getOrDefault(nums, 0) + 1);
+    	}
+    	
+    	//k cannot be greater than the number of distinct elements
+    	if (k > frequency.size()) {
+    		throw new IllegalArgumentException("K cannot be greater than the number of distinct elements in the array");
+    	}
+    	
+    	//Convert Map entries to list
+    	ArrayList<Map.Entry<Integer, Integer>> array = new ArrayList<>(frequency.entrySet());
+    	
+    	int high = array.size() - 1;
+    	int low = 0;
+    	
+    	while (low <= high) {
+    		//Choose last element as the pivot
+    		int pivot = array.get(high).getValue();
+    		int i = low - 1;
+    		
+    		//Partition the array around pivot
+    		for (int j = low; j < high; j++) {
+    			if (array.get(j).getValue() < pivot) {
+    				i++;
+    				Map.Entry<Integer, Integer> temp = array.get(j);
+    				array.set(j, array.get(i));
+    				array.set(i, temp);
+    				
+    			}
+    		}
+    		//Put pivot to it correct position
+    		Map.Entry<Integer, Integer> temp = array.get(i + 1);
+    		array.set(i+1, array.get(high));
+    		array.set(high, temp);
+    		
+    		int pivotIndex = i + 1;
+    		//If index top kth index found return the array from k to end
+    		if (array.size() - k == pivotIndex) {
+    			break;
+    		}
+    		//If kth is smaller than pivotIndex index Search in low to pivotIndex - 1
+    		if (array.size() - k < pivotIndex) {
+    			high = pivotIndex - 1;
+    			
+    		}
+    		//If pivotIndex is smaller than kth index Search in pivotIndex + 1 to high 
+    		else {
+    			low = pivotIndex + 1;
+    		}	
+    	}	
+    	
+    	//Get top K elements
+    	int[] result = new int[k];
+    	
+    	int target = array.size() - k;
+     	for (int i = 0; i < k; i++) {
+    		result[i] = array.get(target + i).getKey();
+  
+    	}
+    	return result;
+     	
+    	
     }
 
 
@@ -311,5 +379,11 @@ public class Top_K_Elements {
         // Approach 4: Bucket Sort
         int[] result4 = obj.topK_UsingBucket(array, k);
         System.out.println("Bucket : " + Arrays.toString(result4));
+        
+        // Approach 5: Quick Select
+        int[] result5 = obj.topK_UsingQuickSelect(array, k);
+        System.out.println("Quick Select : " + Arrays.toString(result5));
+        
+        
     }
 }
