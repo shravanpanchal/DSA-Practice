@@ -3,7 +3,7 @@
  * and false otherwise.
  */
 
-package arrays;
+package strings;
 
 public class ValidAnagram {
 

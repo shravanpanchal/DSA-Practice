@@ -30,7 +30,7 @@
  *    Space Complexity: O(n * k) including keys/output
  */
 
-package arrays;
+package strings;
 
 import java.util.List;
 import java.util.ArrayList;

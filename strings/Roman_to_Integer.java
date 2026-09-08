@@ -46,7 +46,7 @@ s is a valid Roman numeral in the range [1, 3999].
 
 
 
-package arrays;
+package strings;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +79,7 @@ public class Roman_to_Integer {
 			    Map.entry("XC", 90),
 			    Map.entry("CD", 400),
 			    Map.entry("CM", 900)
-			));
+			));	
 
 		int value = 0;
 		if (n == 1) {		
