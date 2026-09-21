@@ -30,6 +30,15 @@ public class LongestSubstringCharacterReplacement {
 		int maxLen = 0;
 		int n = str.length();
 		
+		if (str == null || n == 0) {
+			return 0;
+			
+		}
+		
+		if (n == 1) {
+			return 1;
+		}
+		
 		// Check every possible starting position.
 		for (int i = 0; i < n; i++) {
 			
@@ -73,7 +82,17 @@ public class LongestSubstringCharacterReplacement {
 	 * Space Complexity: O(1)
 	 */
 	public static int characterReplacementOptimal(String str, int k) {
-
+		
+		int n = str.length();
+		if (str == null || n == 0) {
+			return 0;
+			
+		}
+		
+		if (n == 1) {
+			return 1;
+		}
+		
 		int left = 0;
 		int maxFreq = 0;
 		int maxLen = 0;
