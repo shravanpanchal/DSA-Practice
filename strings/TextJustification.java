@@ -121,7 +121,7 @@ public class TextJustification {
 
                 // Distribute remaining spaces from left to right
                 while (spaces > 0) {
-
+                	
                     for (int j = 0; j < gaps && spaces > 0; j++) {
 
                         spaceCount[j]++;
@@ -150,7 +150,6 @@ public class TextJustification {
 
         return result;
     }
-
 
 
     // ============================================================
@@ -254,8 +253,7 @@ public class TextJustification {
         return result;
     }
 
-
-
+    
     // ============================================================
     // MAIN METHOD
     // ============================================================
@@ -263,7 +261,7 @@ public class TextJustification {
     public static void main(String[] args) {
 
         String[] words = {
-            "This", "is", "an", "example",
+            "This", "is", "an", "good", "example",
             "of", "text", "justification."
         };
 
