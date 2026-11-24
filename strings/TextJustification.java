@@ -260,30 +260,17 @@ public class TextJustification {
 
     public static void main(String[] args) {
 
-        String[] words = {
-            "This", "is", "an", "good", "example",
-            "of", "text", "justification."
-        };
+        String[] words = { "This", "is", "an", "good", "example", "of", "text", "justification." };
 
         int maxWidth = 16;
 
         TextJustification obj = new TextJustification();
 
         // Brute Force Approach
-        System.out.println(
-            "Brute Force Approach\n" +
-            "Time: O(n * maxWidth)\n" +
-            "Space: O(maxWidth)\n" +
-            obj.justifyBruteForce(words, maxWidth)
-        );
+        System.out.println("Brute Force Approach\n" + "Time: O(n * maxWidth)\n" + "Space: O(maxWidth)\n" + obj.justifyBruteForce(words, maxWidth));
 
 
         // Optimized Approach
-        System.out.println(
-            "\nOptimized Approach\n" +
-            "Time: O(n * maxWidth)\n" +
-            "Space: O(maxWidth)\n" +
-            obj.justifyOptimized(words, maxWidth)
-        );
+        System.out.println("\nOptimized Approach\n" + "Time: O(n * maxWidth)\n" + "Space: O(maxWidth)\n" + obj.justifyOptimized(words, maxWidth));
     }
 }
