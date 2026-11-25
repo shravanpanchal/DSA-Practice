@@ -42,7 +42,6 @@ public class MergeSortedArray {
     // ============================================================
 
     public static void mergeSorted(int[] array1, int n, int[] array2, int m) {
-
         // Initialize pointers
         int i = n - 1;
         int j = m - 1;
