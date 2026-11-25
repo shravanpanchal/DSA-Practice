@@ -13,7 +13,6 @@
  *
  * Output: [2, 4]
  *
- *
  * APPROACH:
  *
  * 1. Recursive Binary Search - First Occurrence
